@@ -7,15 +7,15 @@ kraniec = 0;                % 0 - sygna³ jest przemiatany od jednego krañca
                             %   do drugiego
                             % 1 - przedstawia szerokoœc pasma przemiatania
                             % 2 - pokazuje pr¹¿ki na obu krañcach
-legenda = 0;                % legenda: 0 - wy³, 1 - w³
+legenda = 1;                % legenda: 0 - wy³, 1 - w³
 
 fo = 3.135 * 10^6;          % Czêstotliwoœæ poœrednia [Hz]
 B = 200 * 10^3 ;            % Pasmo sygna³u
 Bd = -100 * 10^3;
-Bg = 100 * 10^3;
+Bg = 50 * 10^3;
 
 N = 4096;                   % D³ugoœæ wektora obserwacji
-fs = 432*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+fs = 336*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -41,6 +41,21 @@ f_n = f_un .* fs;
 w_t = 50 * Ts;        % Szerokoœæ okna rysowania wykresu sygna³u s[n]
 w_t_ms = w_t * 10^3;
 w_t_us = w_t * 10^6;
+
+% -------------------
+% Skalowanie osi X
+m = ceil(fo/fs);
+f_wid_min = fs * (m - 1);
+f_wid_max = fs * (m - 1) + (fs/2);
+f_wid_m100 = (fo - f_wid_min + Bd) / fs;
+f_wid_m80 = (fo - f_wid_min + Bd + 20000) / fs;
+f_wid_m60 = (fo - f_wid_min + Bd + 40000) / fs;
+f_wid_m40 = (fo - f_wid_min + Bd + 60000) / fs;
+f_wid_m20 = (fo - f_wid_min + Bd + 80000) / fs;
+f_wid_0 = (fo - f_wid_min) / fs;
+f_wid_p20 = (fo - f_wid_min + Bg - 30000) / fs;
+f_wid_p40 = (fo - f_wid_min + Bg - 10000) / fs;
+f_wid_p50 = (fo - f_wid_min + Bg) / fs;
 
 fig_1 = figure;
 set(fig_1, 'color', 'white');
@@ -73,9 +88,11 @@ if kraniec == 0
         bar(f_un, S, 'Linewidth',2);
         xlim([0 0.5])
         ylim([0 0.55])
+        xticks([f_wid_m100 f_wid_m80 f_wid_m60 f_wid_m40 f_wid_m20 f_wid_0 f_wid_p20 f_wid_p40 f_wid_p50])
+        xticklabels({'-100 kHz','-80 kHz','-60 kHz','-40 kHz','-20 kHz','0 kHz','+20 kHz','+40 kHz','+50 kHz'})
         grid on;
         title('Widmo Amplitudowe');
-        xlabel('Czêstotliwoœæ unormowana');
+        xlabel('Czêstotliwoœæ dopplerowska');
         ylabel('Wartoœæ próbki');
         if legenda == 1
             legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...
@@ -119,9 +136,11 @@ elseif kraniec == 1
     bar(f_un, suma, 'Linewidth',2);
     xlim([0 0.5])
     ylim([0 0.8])
+    xticks([f_wid_m100 f_wid_m80 f_wid_m60 f_wid_m40 f_wid_m20 f_wid_0 f_wid_p20 f_wid_p40 f_wid_p50])
+    xticklabels({'-100 kHz','-80 kHz','-60 kHz','-40 kHz','-20 kHz','0 kHz','+20 kHz','+40 kHz','+50 kHz'})
     grid on;
     title('Widmo Amplitudowe');
-    xlabel('Czêstotliwoœæ unormowana');
+    xlabel('Czêstotliwoœæ dopplerowska');
     ylabel('Wartoœæ próbki');
     if legenda == 1
         legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...
@@ -157,9 +176,11 @@ elseif kraniec == 2
     bar(f_un, S, 'Linewidth',2);
     xlim([0 0.5])
     ylim([0 0.55])
+    xticks([f_wid_m100 f_wid_m80 f_wid_m60 f_wid_m40 f_wid_m20 f_wid_0 f_wid_p20 f_wid_p40 f_wid_p50])
+    xticklabels({'-100 kHz','-80 kHz','-60 kHz','-40 kHz','-20 kHz','0 kHz','+20 kHz','+40 kHz','+50 kHz'})
     grid on;
     title('Widmo Amplitudowe');
-    xlabel('Czêstotliwoœæ unormowana');
+    xlabel('Czêstotliwoœæ dopplerowska');
     ylabel('Wartoœæ próbki')
     if legenda == 1
         legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...

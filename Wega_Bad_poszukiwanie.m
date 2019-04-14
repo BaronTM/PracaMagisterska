@@ -16,7 +16,7 @@ for delta = 0 : 1000 : 100000
 fo = 3.135 * 10^6;          % Czêstotliwoœæ poœrednia [Hz]
 B = 150 * 10^3 ;            % Pasmo sygna³u
 Bd = -100 * 10^3;
-Bg = 100 * 10^3;
+Bg = 50 * 10^3;
 
 N = 4096;                   % D³ugoœæ wektora obserwacji
 fs = 400*10^3 + delta;              % Czêstotliwoœæ próbkowania - podpróbkowanie
@@ -45,6 +45,15 @@ f_n = f_un .* fs;
 w_t = 50 * Ts;        % Szerokoœæ okna rysowania wykresu sygna³u s[n]
 w_t_ms = w_t * 10^3;
 w_t_us = w_t * 10^6;
+
+% -------------------
+% Skalowanie osi X
+m = ceil(fo/fs);
+f_wid_min = fs * (m - 1);
+f_wid_max = fs * (m - 1) + (fs/2);
+f_wid_0 = (fo - f_wid_min) / fs;
+f_wid_100 = (fo - f_wid_min + Bd) / fs;
+f_wid_50 = (fo - f_wid_min + Bg) / fs;
 
 %-------------------
 if kraniec == 0
@@ -121,6 +130,8 @@ elseif kraniec == 1
     bar(f_un, suma, 'Linewidth',2);
     xlim([0 0.5])
     ylim([0 0.55])
+    xticks([f_wid_100 f_wid_0 f_wid_50])
+    xticklabels({'-100 kHz','0 kHz','+50 kHz'})
     grid on;
     title('Widmo Amplitudowe');
     xlabel('Czêstotliwoœæ unormowana');
