@@ -3,7 +3,7 @@ close all
 clear all
 
 %============================================================
-kraniec = 0;                % 0 - sygna³ jest przemiatany od jednego krañca
+kraniec = 1;                % 0 - sygna³ jest przemiatany od jednego krañca
                             %   do drugiego
                             % 1 - przedstawia szerokoœc pasma przemiatania
                             % 2 - pokazuje pr¹¿ki na obu krañcach
@@ -15,7 +15,7 @@ Bd = -100 * 10^3;
 Bg = 50 * 10^3;
 
 N = 4096;                   % D³ugoœæ wektora obserwacji
-fs = 336*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+fs = 303.4*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -45,17 +45,44 @@ w_t_us = w_t * 10^6;
 % -------------------
 % Skalowanie osi X
 m = ceil(fo/fs);
-f_wid_min = fs * (m - 1);
-f_wid_max = fs * (m - 1) + (fs/2);
-f_wid_m100 = (fo - f_wid_min + Bd) / fs;
-f_wid_m80 = (fo - f_wid_min + Bd + 20000) / fs;
-f_wid_m60 = (fo - f_wid_min + Bd + 40000) / fs;
-f_wid_m40 = (fo - f_wid_min + Bd + 60000) / fs;
-f_wid_m20 = (fo - f_wid_min + Bd + 80000) / fs;
-f_wid_0 = (fo - f_wid_min) / fs;
-f_wid_p20 = (fo - f_wid_min + Bg - 30000) / fs;
-f_wid_p40 = (fo - f_wid_min + Bg - 10000) / fs;
-f_wid_p50 = (fo - f_wid_min + Bg) / fs;
+f_val = [];
+f_lab = [];
+if (mod(m,2) == 1)
+    f_lab = {'-100 kHz' '-80 kHz' '-60 kHz' '-40 kHz' '-20 kHz' '0 kHz' '+20 kHz' '+40 kHz' '+50 kHz'};
+    f_wid_min = fs * (m - 1);
+    f_wid_max = fs * (m - 1) + (fs/2);
+    f_val(1) = (fo - f_wid_min + Bd) / fs;
+    f_val(2) = (fo - f_wid_min + Bd + 20000) / fs;
+    f_val(3) = (fo - f_wid_min + Bd + 40000) / fs;
+    f_val(4) = (fo - f_wid_min + Bd + 60000) / fs;
+    f_val(5) = (fo - f_wid_min + Bd + 80000) / fs;
+    f_val(6) = (fo - f_wid_min) / fs;
+    f_val(7) = (fo - f_wid_min + Bg - 30000) / fs;
+    f_val(8) = (fo - f_wid_min + Bg - 10000) / fs;
+    f_val(9) = (fo - f_wid_min + Bg) / fs;
+else 
+    f_lab = {'+50 kHz' '+40 kHz' '+20 kHz' '0 kHz' '-20 kHz' '-40 kHz' '-60 kHz' '-80 kHz' '-100 kHz'};
+    f_wid_max = fs * (m);
+    f_wid_min = fs * (m - 1) + (fs/2);
+    f_val(1) = (f_wid_max - fo - Bg) / fs;
+    f_val(2) = (f_wid_max - fo - Bg + 10000) / fs;
+    f_val(3) = (f_wid_max - fo - Bg + 30000) / fs;
+    f_val(4) = (f_wid_max - fo) / fs;
+    f_val(5) = (f_wid_max - fo - Bd - 80000) / fs;
+    f_val(6) = (f_wid_max - fo - Bd - 60000) / fs;
+    f_val(7) = (f_wid_max - fo - Bd - 40000) / fs;
+    f_val(8) = (f_wid_max - fo - Bd - 20000) / fs;
+    f_val(9) = (f_wid_max - fo - Bd) / fs;
+end
+
+if (f_val(4) > 0.5)
+    f_val_temp = f_val;
+    f_lab_temp = f_lab;
+    for i = 1 : 1 : 9
+        f_val(i) = 1 - f_val_temp(10 - i);
+        f_lab(i) = f_lab_temp(10 - i);
+    end
+end
 
 fig_1 = figure;
 set(fig_1, 'color', 'white');
@@ -87,9 +114,9 @@ if kraniec == 0
         subplot(2,1,2);
         bar(f_un, S, 'Linewidth',2);
         xlim([0 0.5])
-        ylim([0 0.55])
-        xticks([f_wid_m100 f_wid_m80 f_wid_m60 f_wid_m40 f_wid_m20 f_wid_0 f_wid_p20 f_wid_p40 f_wid_p50])
-        xticklabels({'-100 kHz','-80 kHz','-60 kHz','-40 kHz','-20 kHz','0 kHz','+20 kHz','+40 kHz','+50 kHz'})
+        ylim([0 0.8])
+        xticks([f_val(1) f_val(2) f_val(3) f_val(4) f_val(5) f_val(6) f_val(7) f_val(8) f_val(9)])
+        xticklabels(f_lab)
         grid on;
         title('Widmo Amplitudowe');
         xlabel('Czêstotliwoœæ dopplerowska');
@@ -136,8 +163,8 @@ elseif kraniec == 1
     bar(f_un, suma, 'Linewidth',2);
     xlim([0 0.5])
     ylim([0 0.8])
-    xticks([f_wid_m100 f_wid_m80 f_wid_m60 f_wid_m40 f_wid_m20 f_wid_0 f_wid_p20 f_wid_p40 f_wid_p50])
-    xticklabels({'-100 kHz','-80 kHz','-60 kHz','-40 kHz','-20 kHz','0 kHz','+20 kHz','+40 kHz','+50 kHz'})
+    xticks([f_val(1) f_val(2) f_val(3) f_val(4) f_val(5) f_val(6) f_val(7) f_val(8) f_val(9)])
+    xticklabels(f_lab)
     grid on;
     title('Widmo Amplitudowe');
     xlabel('Czêstotliwoœæ dopplerowska');
