@@ -18,8 +18,8 @@ B = 150 * 10^3 ;            % Pasmo sygna³u
 Bd = -100 * 10^3;
 Bg = 50 * 10^3;
 
-N = 4096;                   % D³ugoœæ wektora obserwacji
-fs = 400*10^3 + delta;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+N = 2048;                   % D³ugoœæ wektora obserwacji
+fs = 300*10^3 + delta;              % Czêstotliwoœæ próbkowania - podpróbkowanie
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -49,11 +49,40 @@ w_t_us = w_t * 10^6;
 % -------------------
 % Skalowanie osi X
 m = ceil(fo/fs);
-f_wid_min = fs * (m - 1);
-f_wid_max = fs * (m - 1) + (fs/2);
-f_wid_0 = (fo - f_wid_min) / fs;
-f_wid_100 = (fo - f_wid_min + Bd) / fs;
-f_wid_50 = (fo - f_wid_min + Bg) / fs;
+f_val = [];
+f_lab = [];
+if (mod(m,2) == 1)
+    f_lab = {'-100 kHz' '-75 kHz' '-50 kHz' '-25 kHz' '0 kHz' '+25 kHz' '+50 kHz'};
+    f_wid_min = fs * (m - 1);
+    f_wid_max = fs * (m - 1) + (fs/2);
+    f_val(1) = (fo - f_wid_min + Bd) / fs;
+    f_val(2) = (fo - f_wid_min + Bd + 25000) / fs;
+    f_val(3) = (fo - f_wid_min + Bd + 50000) / fs;
+    f_val(4) = (fo - f_wid_min + Bd + 75000) / fs;
+    f_val(5) = (fo - f_wid_min) / fs;
+    f_val(6) = (fo - f_wid_min + Bg - 25000) / fs;
+    f_val(7) = (fo - f_wid_min + Bg) / fs;
+else 
+    f_lab = {'+50 kHz' '+25 kHz' '0 kHz' '-25 kHz' '-50 kHz' '-75 kHz' '-100 kHz'};
+    f_wid_max = fs * (m);
+    f_wid_min = fs * (m - 1) + (fs/2);
+    f_val(1) = (f_wid_max - fo - Bg) / fs;
+    f_val(2) = (f_wid_max - fo - Bg + 25000) / fs;
+    f_val(3) = (f_wid_max - fo) / fs;
+    f_val(4) = (f_wid_max - fo - Bd - 75000) / fs;
+    f_val(5) = (f_wid_max - fo - Bd - 50000) / fs;
+    f_val(6) = (f_wid_max - fo - Bd - 25000) / fs;
+    f_val(7) = (f_wid_max - fo - Bd) / fs;
+end
+
+if (f_val(4) > 0.5)
+    f_val_temp = f_val;
+    f_lab_temp = f_lab;
+    for i = 1 : 1 : 7
+        f_val(i) = 1 - f_val_temp(8 - i);
+        f_lab(i) = f_lab_temp(8 - i);
+    end
+end
 
 %-------------------
 if kraniec == 0
@@ -76,18 +105,20 @@ if kraniec == 0
         hold off
         xlim([0 w_t_us])
         grid on;
-        title(['Sygna³ poœredniej próbkowanej z czêstotliwoœci¹ :  ', num2str(fs/1000), '  kHz']);
+        title(['Sygna? po?redniej próbkowanej z cz?stotliwo?ci? :  ', num2str(fs/1000), '  kHz']);
         xlabel('Czas [us]');
         ylabel('Amplituda');
 
         subplot(2,1,2);
         bar(f_un, S, 'Linewidth',2);
         xlim([0 0.5])
-        ylim([0 0.55])
+        ylim([0 0.8])
+        xticks([f_val(1) f_val(2) f_val(3) f_val(4) f_val(5) f_val(6) f_val(7)])
+        xticklabels(f_lab)
         grid on;
         title('Widmo Amplitudowe');
-        xlabel('Czêstotliwoœæ unormowana');
-        ylabel('Wartoœæ próbki');
+        xlabel('Cz?stotliwo?? dopplerowska');
+        ylabel('Warto?? próbki');
         if legenda == 1
             legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...
                  'f = ', num2str(f_sygnal/10^6), ' [MHz],  ' ...
@@ -122,20 +153,20 @@ elseif kraniec == 1
     hold off
     xlim([0 w_t_us])
     grid on;
-    title(['Sygna³ poœredniej próbkowanej z czêstotliwoœci¹ :  ', num2str(fs/1000), '  kHz']);
+    title(['Sygna? po?redniej próbkowanej z cz?stotliwo?ci? :  ', num2str(fs/1000), '  kHz']);
     xlabel('Czas [us]');
     ylabel('Amplituda');
 
     subplot(2,1,2);
     bar(f_un, suma, 'Linewidth',2);
     xlim([0 0.5])
-    ylim([0 0.55])
-    xticks([f_wid_100 f_wid_0 f_wid_50])
-    xticklabels({'-100 kHz','0 kHz','+50 kHz'})
+    ylim([0 0.8])
+    xticks([f_val(1) f_val(2) f_val(3) f_val(4) f_val(5) f_val(6) f_val(7)])
+    xticklabels(f_lab)
     grid on;
     title('Widmo Amplitudowe');
-    xlabel('Czêstotliwoœæ unormowana');
-    ylabel('Wartoœæ próbki');
+    xlabel('Cz?stotliwo?? dopplerowska');
+    ylabel('Warto?? próbki');
     if legenda == 1
         legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...
              'f = ', num2str(f_sygnal/10^6), ' [MHz],  ' ...
@@ -162,21 +193,22 @@ elseif kraniec == 2
     hold off
     xlim([0 w_t_us])
     grid on;
-    title(['Sygna³ poœredniej próbkowanej z czêstotliwoœci¹ :  ', num2str(fs/1000), '  kHz']);
+    title(['Sygna? po?redniej próbkowanej z cz?stotliwo?ci? :  ', num2str(fs/1000), '  kHz']);
     xlabel('Czas [us]');
     ylabel('Amplituda');
 
-    subplot(2,1,2);
+    subplot(2,2,3);
     bar(f_un, S, 'Linewidth',2);
     xlim([0 0.5])
-    ylim([0 0.55])
+    ylim([0 0.8])
+    xticks([f_val(1) f_val(2) f_val(3) f_val(4) f_val(5) f_val(6) f_val(7)])
+    xticklabels(f_lab)
     grid on;
     title('Widmo Amplitudowe');
-    xlabel('Czêstotliwoœæ unormowana');
-    ylabel('Wartoœæ próbki')
+    xlabel('Cz?stotliwo?? dopplerowska');
+    ylabel('Warto?? próbki');
     if legenda == 1
         legend(['fs = ', num2str(fs/10^3), ' [kHz],  '  ...
-             'f = ', num2str(f_sygnal/10^6), ' [MHz],  ' ...
              'df = ', num2str(df), ' [Hz],  ' ...
              'N = ', num2str(N), ' [Sa],  ' ...
              'T = ', num2str(T * 10^3), ' [ms]']);
@@ -184,7 +216,7 @@ elseif kraniec == 2
     pause(0.001);
     set(gcf, 'Position', get(0, 'Screensize'));
 end
-pause(0.5);
+pause(1);
 end
 
 
