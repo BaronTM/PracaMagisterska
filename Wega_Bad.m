@@ -3,7 +3,7 @@ close all
 clear all
 
 %============================================================
-kraniec = 0;                % 0 - sygna³ jest przemiatany od jednego krañca
+kraniec = 2;                % 0 - sygna³ jest przemiatany od jednego krañca
                             %   do drugiego
                             % 1 - przedstawia szerokoœc pasma przemiatania
                             % 2 - pokazuje pr¹¿ki na obu krañcach
