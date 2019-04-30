@@ -12,6 +12,7 @@ Bg = 50 * 10^3;
 
 N = 1024 * 8;                   % D³ugoœæ wektora obserwacji
 fs = 319*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+Nz = N - 2 * 1024;              % D³ugoœæ wektora zer
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -146,8 +147,11 @@ noise = sigma * randn(1,N);
 f_sygnal_1 = fo + f_syg_0;
 f_sygnal_2 = fo + f_syg_1;
 s = sin(2 * pi * f_sygnal_1 * n / fs) + sin(2 * pi * f_sygnal_2 * n / fs) + noise;         % Próbki sygna³u - podpróbkowanie
+for i = (N - Nz + 1) : 1 : N
+    s(i) = 0;
+end
 sx = s .* norm;                                      % Normowanie sygna³u                   
-S = abs(fft(sx, N)); 
+S = abs(fft(sx, N));
 
 bar(f_un, S, 'Linewidth',2);
 xlim([0.0 0.5])
@@ -174,6 +178,9 @@ set(gcf, 'Position', get(0, 'Screensize'));
 f_sygnal_1 = fo + f_syg_0;
 f_sygnal_2 = fo + f_syg_1;
 s = sin(2 * pi * f_sygnal_1 * n / fs) + sin(2 * pi * f_sygnal_2 * n / fs) + noise;         % Próbki sygna³u - podpróbkowanie
+for i = (N - Nz + 1) : 1 : N
+    s(i) = 0;
+end
 sx = s .* norm;                                      % Normowanie sygna³u                   
 S = abs(fft(sx, N));                                 % Modu³ widma sygna³u 
 
@@ -203,8 +210,11 @@ end
 f_sygnal_1 = fo + f_syg_0;
 f_sygnal_2 = fo + f_syg_2;
 s = sin(2 * pi * f_sygnal_1 * n / fs) + sin(2 * pi * f_sygnal_2 * n / fs) + noise;         % Próbki sygna³u - podpróbkowanie
+for i = (N - Nz + 1) : 1 : N
+    s(i) = 0;
+end
 sx = s .* norm;                                      % Normowanie sygna³u                   
-S = abs(fft(sx, N));                                 % Modu³ widma sygna³u 
+S = abs(fft(sx, N));                                % Modu³ widma sygna³u 
 
 subplot(2,2,2);
 bar(f_un, S, 'Linewidth',2);
@@ -230,8 +240,11 @@ end
 f_sygnal_1 = fo + f_syg_0;
 f_sygnal_2 = fo + f_syg_4;
 s = sin(2 * pi * f_sygnal_1 * n / fs) + sin(2 * pi * f_sygnal_2 * n / fs) + noise;         % Próbki sygna³u - podpróbkowanie
+for i = (N - Nz + 1) : 1 : N
+    s(i) = 0;
+end
 sx = s .* norm;                                      % Normowanie sygna³u                   
-S = abs(fft(sx, N));                                 % Modu³ widma sygna³u 
+S = abs(fft(sx, N));;                                 % Modu³ widma sygna³u 
 
 subplot(2,2,3);
 bar(f_un, S, 'Linewidth',2);
@@ -256,8 +269,11 @@ end
 f_sygnal_1 = fo + f_syg_0;
 f_sygnal_2 = fo + f_syg_8;
 s = sin(2 * pi * f_sygnal_1 * n / fs) + sin(2 * pi * f_sygnal_2 * n / fs) + noise;         % Próbki sygna³u - podpróbkowanie
+for i = (N - Nz + 1) : 1 : N
+    s(i) = 0;
+end
 sx = s .* norm;                                      % Normowanie sygna³u                   
-S = abs(fft(sx, N));                                 % Modu³ widma sygna³u 
+S = abs(fft(sx, N));                              % Modu³ widma sygna³u 
 
 subplot(2,2,4);
 bar(f_un, S, 'Linewidth',2);
@@ -278,6 +294,6 @@ if legenda == 1
          'T = ', num2str(T * 10^3), ' [ms]']);
 end
 
-%saveas(gcf,'shoot.png')
+%saveas(gcf,'shoot_zero.png')
 
 
