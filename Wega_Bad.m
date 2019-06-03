@@ -3,7 +3,7 @@ close all
 clear all
 
 %============================================================
-kraniec = 2;                % 0 - sygna³ jest przemiatany od jednego krañca
+kraniec = 1;                % 0 - sygna³ jest przemiatany od jednego krañca
                             %   do drugiego
                             % 1 - przedstawia szerokoœc pasma przemiatania
                             % 2 - pokazuje pr¹¿ki na obu krañcach
@@ -14,8 +14,8 @@ B = 150 * 10^3 ;            % Pasmo sygna³u
 Bd = -100 * 10^3;
 Bg = 50 * 10^3;
 
-N = 2048;                   % D³ugoœæ wektora obserwacji
-fs = 319*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+N = 16384;                   % D³ugoœæ wektora obserwacji
+fs = 400*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -60,8 +60,8 @@ if (mod(m,2) == 1)
     f_val(7) = (fo - f_wid_min + Bg) / fs;
 else 
     f_lab = {'+50 kHz' '+25 kHz' '0 kHz' '-25 kHz' '-50 kHz' '-75 kHz' '-100 kHz'};
-    f_wid_max = fs * (m);
-    f_wid_min = fs * (m - 1) + (fs/2);
+    f_wid_max = fs * (m)
+    f_wid_min = fs * (m - 1) + (fs/2)
     f_val(1) = (f_wid_max - fo - Bg) / fs;
     f_val(2) = (f_wid_max - fo - Bg + 25000) / fs;
     f_val(3) = (f_wid_max - fo) / fs;
@@ -70,6 +70,11 @@ else
     f_val(6) = (f_wid_max - fo - Bd - 25000) / fs;
     f_val(7) = (f_wid_max - fo - Bd) / fs;
 end
+
+
+
+f_valaaaa = ((f_wid_max - fo) / fs) * 16384
+
 
 if (f_val(4) > 0.5)
     f_val_temp = f_val;
