@@ -11,8 +11,8 @@ Bd = -100 * 10^3;
 Bg = 50 * 10^3;
 
 N = 1024 * 8;                   % D³ugoœæ wektora obserwacji
-fs = 319*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
-Nz = N - 2 * 1024;              % D³ugoœæ wektora zer
+fs = 400*10^3;              % Czêstotliwoœæ próbkowania - podpróbkowanie
+Nz = N - 1 * 1024;              % D³ugoœæ wektora zer
 
 Ts = 1/fs;
 T = Ts * N;                 % Czas obserwacji sygna³u
@@ -85,36 +85,36 @@ end
 f_val_zoom = [];
 f_lab_zoom = [];
 if (mod(m,2) == 1)
-    f_lab_zoom = {'-60 kHz' '-59 kHz' '-58 kHz' '-57 kHz' '-56 kHz' '-55 kHz' '-54 kHz' '-53 kHz' '-52 kHz' '-51 kHz' '-50 kHz'};
+    f_lab_zoom = {'-65 kHz' '-64 kHz' '-63 kHz' '-62 kHz' '-61 kHz' '-60 kHz' '-59 kHz' '-58 kHz' '-57 kHz' '-56 kHz' '-55 kHz'};
     f_wid_min = fs * (m - 1);
     f_wid_max = fs * (m - 1) + (fs/2);
-    f_val_zoom(1) = (fo - f_wid_min + Bd + 40000) / fs;
-    f_val_zoom(2) = (fo - f_wid_min + Bd + 41000) / fs;
-    f_val_zoom(3) = (fo - f_wid_min + Bd + 42000) / fs;
-    f_val_zoom(4) = (fo - f_wid_min + Bd + 43000) / fs;
-    f_val_zoom(5) = (fo - f_wid_min + Bd + 44000) / fs;
-    f_val_zoom(6) = (fo - f_wid_min + Bd + 45000) / fs;
-    f_val_zoom(7) = (fo - f_wid_min + Bd + 46000) / fs;
-    f_val_zoom(8) = (fo - f_wid_min + Bd + 47000) / fs;
-    f_val_zoom(9) = (fo - f_wid_min + Bd + 48000) / fs;
-    f_val_zoom(10) = (fo - f_wid_min + Bd + 49000) / fs;
-    f_val_zoom(11) = (fo - f_wid_min + Bd + 50000) / fs; 
+    f_val_zoom(1) = (fo - f_wid_min + Bd + 35000) / fs;
+    f_val_zoom(2) = (fo - f_wid_min + Bd + 36000) / fs;
+    f_val_zoom(3) = (fo - f_wid_min + Bd + 37000) / fs;
+    f_val_zoom(4) = (fo - f_wid_min + Bd + 38000) / fs;
+    f_val_zoom(5) = (fo - f_wid_min + Bd + 39000) / fs;
+    f_val_zoom(6) = (fo - f_wid_min + Bd + 40000) / fs;
+    f_val_zoom(7) = (fo - f_wid_min + Bd + 41000) / fs;
+    f_val_zoom(8) = (fo - f_wid_min + Bd + 42000) / fs;
+    f_val_zoom(9) = (fo - f_wid_min + Bd + 43000) / fs;
+    f_val_zoom(10) = (fo - f_wid_min + Bd + 44000) / fs;
+    f_val_zoom(11) = (fo - f_wid_min + Bd + 450000) / fs; 
     
 else 
-    f_lab_zoom = {'50 kHz' '51 kHz' '52 kHz' '53 kHz' '54 kHz' '55 kHz' '56 kHz' '57 kHz' '58 kHz' '59 kHz' '60 kHz'};
+    f_lab_zoom = {'55 kHz' '56 kHz' '57 kHz' '58 kHz' '59 kHz' '60 kHz' '61 kHz' '62 kHz' '63 kHz' '64 kHz' '65 kHz'};
     f_wid_max = fs * (m);
     f_wid_min = fs * (m - 1) + (fs/2);
-    f_val_zoom(1) = (f_wid_max - fo - Bd - 50000) / fs;
-    f_val_zoom(2) = (f_wid_max - fo - Bd - 49000) / fs;
-    f_val_zoom(3) = (f_wid_max - fo - Bd - 48000) / fs;
-    f_val_zoom(4) = (f_wid_max - fo - Bd - 47000) / fs;
-    f_val_zoom(5) = (f_wid_max - fo - Bd - 46000) / fs;
-    f_val_zoom(6) = (f_wid_max - fo - Bd - 45000) / fs;
-    f_val_zoom(7) = (f_wid_max - fo - Bd - 44000) / fs;
-    f_val_zoom(8) = (f_wid_max - fo - Bd - 43000) / fs;
-    f_val_zoom(9) = (f_wid_max - fo - Bd - 42000) / fs;
-    f_val_zoom(10) = (f_wid_max - fo - Bd - 41000) / fs;
-    f_val_zoom(11) = (f_wid_max - fo - Bd - 40000) / fs;     
+    f_val_zoom(1) = (f_wid_max - fo - Bd - 45000) / fs;
+    f_val_zoom(2) = (f_wid_max - fo - Bd - 44000) / fs;
+    f_val_zoom(3) = (f_wid_max - fo - Bd - 43000) / fs;
+    f_val_zoom(4) = (f_wid_max - fo - Bd - 42000) / fs;
+    f_val_zoom(5) = (f_wid_max - fo - Bd - 41000) / fs;
+    f_val_zoom(6) = (f_wid_max - fo - Bd - 40000) / fs;
+    f_val_zoom(7) = (f_wid_max - fo - Bd - 39000) / fs;
+    f_val_zoom(8) = (f_wid_max - fo - Bd - 38000) / fs;
+    f_val_zoom(9) = (f_wid_max - fo - Bd - 37000) / fs;
+    f_val_zoom(10) = (f_wid_max - fo - Bd - 36000) / fs;
+    f_val_zoom(11) = (f_wid_max - fo - Bd - 35000) / fs;     
 end
 
 if (f_val(4) > 0.5)
@@ -133,7 +133,7 @@ df_2 = fs/2048;
 df_4 = fs/4096;
 df_8 = fs/8192;
 
-f_syg_0 = -52164.0625;
+f_syg_0 = -60000;
 f_syg_1 = f_syg_0 - 1 * df_1;
 f_syg_2 = f_syg_0 - 1 * df_2;
 f_syg_4 = f_syg_0 - 1 * df_4;
@@ -183,10 +183,11 @@ for i = (N - Nz + 1) : 1 : N
 end
 sx = s .* norm;                                      % Normowanie sygna³u                   
 S = abs(fft(sx, N));                                 % Modu³ widma sygna³u 
+%S = fft(sx, N);
 
 subplot(2,2,1);
 bar(f_un, S, 'Linewidth',2);
-xlim([0.331 0.343])
+xlim([0.308 0.318])
 y_scale2 = max(S) + 0.1;
 ylim([0 y_scale2])
 xticks([f_val_zoom(1) f_val_zoom(2) f_val_zoom(3) f_val_zoom(4) f_val_zoom(5) f_val_zoom(6) f_val_zoom(7) f_val_zoom(8) f_val_zoom(9) f_val_zoom(10) f_val_zoom(11)])
@@ -218,7 +219,7 @@ S = abs(fft(sx, N));                                % Modu³ widma sygna³u
 
 subplot(2,2,2);
 bar(f_un, S, 'Linewidth',2);
-xlim([0.331 0.343])
+xlim([0.308 0.318])
 y_scale2 = max(S) + 0.1;
 ylim([0 y_scale2])
 xticks([f_val_zoom(1) f_val_zoom(2) f_val_zoom(3) f_val_zoom(4) f_val_zoom(5) f_val_zoom(6) f_val_zoom(7) f_val_zoom(8) f_val_zoom(9) f_val_zoom(10) f_val_zoom(11)])
@@ -248,7 +249,7 @@ S = abs(fft(sx, N));;                                 % Modu³ widma sygna³u
 
 subplot(2,2,3);
 bar(f_un, S, 'Linewidth',2);
-xlim([0.331 0.343])
+xlim([0.308 0.318])
 y_scale4 = max(S) + 0.1;
 ylim([0 y_scale4])
 xticks([f_val_zoom(1) f_val_zoom(2) f_val_zoom(3) f_val_zoom(4) f_val_zoom(5) f_val_zoom(6) f_val_zoom(7) f_val_zoom(8) f_val_zoom(9) f_val_zoom(10) f_val_zoom(11)])
@@ -277,7 +278,7 @@ S = abs(fft(sx, N));                              % Modu³ widma sygna³u
 
 subplot(2,2,4);
 bar(f_un, S, 'Linewidth',2);
-xlim([0.331 0.343])
+xlim([0.308 0.318])
 y_scale8 = max(S) + 0.1;
 ylim([0 y_scale8])
 xticks([f_val_zoom(1) f_val_zoom(2) f_val_zoom(3) f_val_zoom(4) f_val_zoom(5) f_val_zoom(6) f_val_zoom(7) f_val_zoom(8) f_val_zoom(9) f_val_zoom(10) f_val_zoom(11)])
