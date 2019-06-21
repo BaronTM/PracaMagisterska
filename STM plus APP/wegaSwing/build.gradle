@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id "net.ltgt.apt" version "0.21"
+}
+
+group 'wat.magisterka.ep'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor  'org.projectlombok:lombok:1.18.8'
+    implementation 'com.github.wendykierp:JTransforms:3.1'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'pl.edu.icm:JLargeArrays:1.2'
+    implementation 'org.apache.commons:commons-math3:3.0'
+    implementation 'org.apache.mina:mina-core:2.0.16'
+    implementation 'io.netty:netty-all:4.1.36.Final'
+    implementation 'org.slf4j:slf4j-simple:1.7.26'
+
+}

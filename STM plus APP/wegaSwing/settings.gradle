@@ -1,0 +1,4 @@
+rootProject.name = 'wegaSwing'
+include 'spectrumApk'
+include 'swingSpectrum'
+
